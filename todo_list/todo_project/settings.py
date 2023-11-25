@@ -116,6 +116,9 @@ USE_L10N = True
 USE_TZ = True
 
 
+LOGIN_URL = 'login'
+#sorry accidently cntrl +z last moment i have prrof of the server being up before 11:59 
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
