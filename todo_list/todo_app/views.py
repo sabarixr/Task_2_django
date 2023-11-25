@@ -1,12 +1,11 @@
 from django.shortcuts import redirect
 from .models import ToDoList, ToDoItem
-from django.views.generic import (ListView, CreateView, UpdateView,DeleteView,FormView )
-from django.urls import reverse,  reverse_lazy
+from django.views.generic import (ListView, CreateView, UpdateView, DeleteView, FormView)
+from django.urls import reverse, reverse_lazy
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
-
 
 
 class PageLoginView(LoginView):
@@ -15,40 +14,44 @@ class PageLoginView(LoginView):
 
     def get_success_url(self):
         return reverse_lazy("index")
-    
+
+
 class SignUpView(FormView):
     template_name = 'todo_app/signup.html'
     form_class = UserCreationForm
     success_url = reverse_lazy("index")
+
     def form_valid(self, form):
         user = form.save()
         login(self.request, user)
         return super(SignUpView, self).form_valid(form)
-    def form_invalid(self, form):
 
-        return self.render_to_response(self.get_context_data(form=form))
 
-    def get(self, *args, **kwargs):
+'''    def get(self, *args, **kwargs):
         if self.request.user.is_authenticated:
-            return redirect('index')
+            return redirect('index')'''
 
-class ListListView(LoginRequiredMixin,ListView):
+
+# i made it correct but idk what happened when i was editing css its too late sorry
+
+class ListListView(LoginRequiredMixin, ListView):
     model = ToDoList
     template_name = "todo_app/index.html"
-    
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        
-        #print(ToDoList.objects.all())
+
+        # print(ToDoList.objects.all())
 
         user_specific_lists = ToDoList.objects.filter(user=self.request.user)
-        #print(user_specific_lists)
+        # print(user_specific_lists)
 
         context['object_list'] = user_specific_lists
 
         return context
-class ItemListView(LoginRequiredMixin,ListView):
+
+
+class ItemListView(LoginRequiredMixin, ListView):
     model = ToDoItem
     template_name = "todo_app/todo_list.html"
 
@@ -60,19 +63,21 @@ class ItemListView(LoginRequiredMixin,ListView):
         context["todo_list"] = ToDoList.objects.get(id=self.kwargs["list_id"])
         return context
 
+
 class ListCreate(LoginRequiredMixin, CreateView):
     model = ToDoList
     fields = ["title"]
 
     def form_valid(self, form):
         form.instance.user = self.request.user
-        
-        #print(f"Form instance user: {form.instance.user}")
+
+        # print(f"Form instance user: {form.instance.user}")
         result = super().form_valid(form)
-        #print(f"Created ToDoList user: {self.object.user}")
+        # print(f"Created ToDoList user: {self.object.user}")
         return result
 
-class ItemCreate(LoginRequiredMixin,CreateView):
+
+class ItemCreate(LoginRequiredMixin, CreateView):
     model = ToDoItem
     fields = [
         "todo_list",
@@ -97,7 +102,8 @@ class ItemCreate(LoginRequiredMixin,CreateView):
     def get_success_url(self):
         return reverse("list", args=[self.object.todo_list_id])
 
-class ItemUpdate(LoginRequiredMixin,UpdateView):
+
+class ItemUpdate(LoginRequiredMixin, UpdateView):
     model = ToDoItem
     fields = [
         "todo_list",
@@ -116,11 +122,13 @@ class ItemUpdate(LoginRequiredMixin,UpdateView):
     def get_success_url(self):
         return reverse("list", args=[self.object.todo_list_id])
 
-class ListDelete(LoginRequiredMixin,DeleteView):
+
+class ListDelete(LoginRequiredMixin, DeleteView):
     model = ToDoList
     success_url = reverse_lazy("index")
 
-class ItemDelete(LoginRequiredMixin,DeleteView):
+
+class ItemDelete(LoginRequiredMixin, DeleteView):
     model = ToDoItem
 
     def get_success_url(self):
