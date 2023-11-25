@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Libre+Baskerville&family=Noto+Sans:ital,wght@1,300&family=Smooch+Sans:wght@200&display=swap"
+      rel="stylesheet"
+    />
+    <title>Django To-do Lists</title>
+
+    <style>
+      html {
+        margin: 0;
+      }
+      body {
+        font-family: "Noto Sans", sans-serif;
+        background-color: whitesmoke;
+      }
+      p,
+      a {
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+          Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue",
+          sans-serif;
+      }
+      .container {
+        max-width: 550px;
+        margin: auto;
+        border-radius: 25px;
+        box-shadow: 10px 5px 5px rgba(224, 130, 63, 0.77);
+      }
+      .first_page {
+        display: flex;
+        background-color: rgb(255, 251, 0);
+      }
+
+      .heading_123 {
+        margin-left: 15%;
+      }
+      .user-controls {
+        display: inline-flex;
+        max-width: fit-content;
+        margin-left: 80px;
+      }
+      .go-back-button {
+        display: block;
+      }
+      .form-fillers {
+        margin-left: 40%;
+        margin-right: 40%;
+        display: flex;
+        justify-content: space-between;
+      }
+      input {
+        display: inline-flexbox;
+        justify-content: space-between;
+        padding: 2px;
+        margin-left: auto;
+      }
+      .todo_items_in_list {
+        display: flexbox;
+
+        border-radius: 20px;
+        list-style-type: none;
+      }
+      .eachitems-inlist {
+        display: flexbox;
+        border-radius: 2px;
+        background-color: rgb(240, 172, 83);
+      }
+      .login-form-link {
+        margin: 20px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="first_page">
+        <div class="go-back-button">
+          <input type="button" value="Go Back" onclick="location.href='{{ url
+          "index" }}'">
+        </div>
+        <div class="heading_123">
+          <h1>Django To-do List</h1>
+        </div>
+        <div class="user-controls">
+          {% if request.user.is_authenticated%}
+          <p>
+            {{request.user}}<br />
+            <a href="{% url 'logout' %}">Logout</a>
+          </p>
+          {% else %}
+          <a href="{% url 'login' %}">Login</a>
+          {% endif %}
+        </div>
+      </div>
+      <div class="first_list_overview">
+        {% block content %} This content will be replaced by different html code
+        for each page. {% endblock %}
+      </div>
+    </div>
+  </body>
+</html>
