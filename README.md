@@ -4,7 +4,7 @@ I really had no time doing this. i couldn't do it full as there was assigments a
 | **Task** | **Task Name**             | **Status**                   | 
 | -------- | ------------------------- | ---------------------------- | 
 | Intro    | Creating Github Respitory | Completed                    |
-| Task01   | (Automate the boring stuff)[https://github.com/sabarixr/Amfoss-standby-tasks.git]| almost 12 chapters completed | 
+| Task01   | [Automate the boring stuff](https://github.com/sabarixr/Amfoss-standby-tasks.git)| almost 12 chapters completed | 
 | Task02   | Django To DO List| Completed (didnt had time to do the css properly)|
 | Task03   | [React notes app](https://github.com/sabarixr/react_fullstack.git)|
 | Task04   | [Photo editor](https://github.com/sabarixr/Picture_editor.git)| Completed partially| 
